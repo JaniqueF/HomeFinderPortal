@@ -1,3 +1,72 @@
+        body {
+            font-family: Arial, sans-serif;
+            /* background: url("image/blurmap.png") no-repeat center; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;   
+        }
+
+        .loginBox {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 95%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+
+     
+
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+/* 
+        .link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+
+        .forgot {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .forgot a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 14px;
+        }
+
+        .forgot a:hover {
+            text-decoration: underline;
+        } */
+
+
 #dashboard {
     display: none;
 }
