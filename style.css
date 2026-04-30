@@ -44,29 +44,33 @@
         button:hover {
             background: #0056b3;
         }
-/* 
-        .link {
-            text-align: center;
-            margin-top: 10px;
-        }
 
+#signUpBox {
+  display: none;
+}
 
-        .forgot {
-            text-align: center;
-            margin-top: 8px;
-        }
-
-        .forgot a {
-            text-decoration: none;
-            color: #007BFF;
-            font-size: 14px;
-        }
-
-        .forgot a:hover {
-            text-decoration: underline;
-        } */
-
+#signUpMessage {
+  margin-top: 10px;
+  text-align: center;
+  color: red;
+}
 
 #dashboard {
     display: none;
+}
+
+.propertyCard {
+    background: white;
+    padding: 20px;
+    margin: 15px auto;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.propertyLists {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }

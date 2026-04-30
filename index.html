@@ -16,12 +16,83 @@
         <button id="loginButton">Login</button>
       </form>
       <div id="message"></div>
+      <div class="registerLink">
+        <p>
+          Don't have an account?
+          <a href="#" id="showSignUp">Signup now</a>
+        </p>
+      </div>
     </div>
 
-    <!--Dashboard if login successfull-->
+    <!--Sign Up (FR-1&2)-->
+    <div class="signUpBox" id="signUpBox">
+      <h2>HomeFinder Registration</h2>
+      <input type="text" id="fullName" placeholder="Full Name" required />
+      <input type="email" id="signUpEmail" placeholder="Email" required />
+      <input
+        type="password"
+        id="signUpPassword"
+        placeholder="Password"
+        required
+      />
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="Confirm Password"
+        required
+      />
+      <div id="signUpMessage"></div>
+      <button id="createAccount">Create Account</button>
+
+      <button id="backToLogin">Back to Login</button>
+    </div>
+
+    <!--Dashboard if login successful-->
     <div id="dashboard">
-      <h2>Welcome to HomeFinder!</h2>
-      <p>User Successfully logged in</p>
+      <h1>HomeFinder Portal</h1>
+      <h2>Welcome, Customer!</h2>
+
+      <!-- search property -->
+      <div class="searchBox" id="searchBox">
+        <input type="text" placeholder="Search property listings..." />
+        <button id="searchButton">Search</button>
+        <h3>Browse Properties</h3>
+
+        <div class="propertyLists">
+          <div class="propertyCard">
+            <h4>Family Home</h4>
+            <p>Residential</p>
+            <p>£120,000/month</p>
+            <button>View</button>
+          </div>
+
+          <div class="propertyCard">
+            <h4>Office Space</h4>
+            <p>Commercial</p>
+            <p>£3,000/month</p>
+            <button>View</button>
+          </div>
+
+          <div class="propertyCard">
+            <h4>Modern Flat</h4>
+            <p>Rental</p>
+            <p>£1,200/month</p>
+            <button>View</button>
+          </div>
+        </div>
+
+        <!-- submit inquiry -->
+        <div class="inquiryMessage">
+          <h4>Submit Inquiry</h4>
+          <input type="text" id="inquiryProperty" placeholder="Property Name" />
+          <textarea
+            id="inquriyMessage"
+            placeholder="Enter your inquiry..."
+          ></textarea>
+          <button id="inquiryButton">Submit Inquiry</button>
+          <div id="inquiryResult"></div>
+        </div>
+      </div>
     </div>
 
     <script src="data.js"></script>
