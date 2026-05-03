@@ -63,6 +63,13 @@
     display: none;
 }
 
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
 
 .propertyCard {
     background: white;
@@ -73,7 +80,7 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.propertyLists {
+.propertyList {
     display: flex;
     justify-content: center;
     gap: 20px;

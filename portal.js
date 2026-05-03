@@ -1,3 +1,5 @@
+//Personal data handling is minimised and stored locally (NFR-1, NFR-2, NFR-3)
+//System maintenance scheduling would be handled server-side in production (NFR-10)
 if (localStorage.getItem("homeFinderUsers")) {
   users = JSON.parse(localStorage.getItem("homeFinderUsers"));
 }
@@ -28,20 +30,17 @@ let tokenMessage = document.getElementById("tokenMessage");
 let currentToken;
 let currentUser;
 
-//INQUIRIES
-let inquiryButton = document.getElementById("inquiryButton");
-let inquiryProperty = document.getElementById("inquiryProperty");
-let inquiryMessage = document.getElementById("inquiryMessage");
-let inquiryResult = document.getElementById("inquiryResult");
-
 //DASHBOARD
 let dashboard = document.getElementById("dashboard")
 let logOutButton = document.getElementById("logOutButton")
+let searchInput = document.querySelector("#searchBox input");
+let searchButton = document.getElementById("searchButton");
 
 //ADMIN ACCESS
 let adminAccess = document.getElementById("adminAccess");
 let propertyName = document.getElementById("propertyName");
 let propertyType = document.getElementById("propertyType");
+let propertyAddress = document.getElementById("propertyAddress");
 let propertyPrice = document.getElementById("propertyPrice");
 let propertyDescription = document.getElementById("propertyDescription");
 let addPropertyButton = document.getElementById("addPropertyButton");
@@ -50,8 +49,15 @@ let propertyList = document.getElementById("propertyList");
 let propertyStatus = document.getElementById("propertyStatus");
 let properties = [];
 
+//INQUIRIES
+let inquiryButton = document.getElementById("inquiryButton");
+let inquiryProperty = document.getElementById("inquiryProperty");
+let inquirySection = document.getElementById("inquirySection");
+let inquiryMessage = document.getElementById("inquiryMessage");
+let inquiryResult = document.getElementById("inquiryResult");
 
-//Login
+
+//HANDLE USER LOGIN (FR-6&7). One active session per user (NFR-4) 
 button.addEventListener("click", function (event) {
     event.preventDefault();
     console.log("clicked");
@@ -64,6 +70,7 @@ button.addEventListener("click", function (event) {
         return account.email === userEmail && account.password === userPassword;
     });
 
+    //TOKEN VERIFICATION (FR-8)
     if (matchedUser) {
         currentUser = matchedUser;
         console.log("login success");
@@ -71,7 +78,7 @@ button.addEventListener("click", function (event) {
         loginBox.style.display = "none";
         tokenBox.style.display = "block";
 
-        tokenMessage.textContent = "Token:" + currentToken;
+        tokenMessage.textContent = "Token: " + currentToken;
 
     } else {
         console.log("login fail");
@@ -88,20 +95,22 @@ verifyToken.addEventListener("click", function() {
 
         tokenBox.style.display = "none";
         dashboard.style.display = "block";
+        tokenInput.value = "";
     } else {
         tokenMessage.textContent = "Invalid Token."
     }
-    //Dashboard display based on user role
+    //ROLE ACCESS CONTROL - ADMIN/CUSTOMER (NFR-6)
     if (currentUser.role === "admin") {
     adminAccess.style.display = "block";
+    inquirySection.style.display = "none";
     } else {
         adminAccess.style.display = "none";
+        inquirySection.style.display ="block";
     }
 
 });
 
-//SignUp
-
+//RESGISTRATION
 showSignUp.addEventListener("click", function (event) {
     event.preventDefault();
     console.log("clicked");
@@ -110,7 +119,6 @@ showSignUp.addEventListener("click", function (event) {
 
 });
 
-//Signup
 createAccount.addEventListener("click", function() {
     console.log("signup link clicked");
     let name = fullName.value;
@@ -152,17 +160,44 @@ backToLogin.addEventListener("click", function () {
     loginBox.style.display = "block";
 });
 
-//Dashboard
+//DASHBOARD
+searchButton.addEventListener("click", function() {
+    let searchValue = searchInput.value.toLowerCase();
+    propertyList.innerHTML = "";
+
+    let filteredProperties = properties.filter(function(property) {
+        return property.name.toLowerCase().includes(searchValue) ||
+               property.type.toLowerCase().includes(searchValue);
+    });
+
+    filteredProperties.forEach(function(property) {
+        propertyList.innerHTML += `
+            <div class="propertyCard">
+                <h4>${property.name}</h4>
+                <p>Type: ${property.type}</p>
+                <p>Address: ${property.address}</p>
+                <p>Price: £${property.price}</p>
+                <p>Status: ${property.status}</p>
+                <p>${property.description}</p>
+            </div>`;
+    });
+});
+
 logOutButton.addEventListener("click", function () {
     dashboard.style.display ="none";
     loginBox.style.display = "block";
+    searchInput.value = "";
+    inquiryProperty.value = "";
+    inquiryMessage.value = "";
+    inquiryResult.textContent = "";   
 });
 
-//Admin - Adding Properties
+//ADMIN - ADDING PROPERTIES
 addPropertyButton.addEventListener("click", function() {
     console.log("add button clicked");
     console.log(propertyName.value);
     console.log(propertyType.value);
+    console.log(propertyAddress.value);
     console.log(propertyPrice.value);
     console.log(propertyDescription.value);
     console.log(propertyStatus.value);
@@ -170,45 +205,75 @@ addPropertyButton.addEventListener("click", function() {
     let newProperty = {
         name: propertyName.value,
         type: propertyType.value,
+        address: propertyAddress.value,
         price: propertyPrice.value,
         description: propertyDescription.value,
         status: propertyStatus.value
     };
 
     //Incomplete Details
-    if (propertyName.value === "" || propertyType.value === "" || propertyPrice.value === "" ||
-         propertyDescription.value === "" || propertyStatus.value === "") {
+    if (propertyName.value === "" || propertyType.value === "" || propertyAddress.value === "" || 
+        propertyPrice.value === "" || propertyDescription.value === "" || propertyStatus.value === "") {
         propertyMessage.textContent = "Please complete all required property details.";
+        propertyMessage.className = "error";
         return;
     }
 
     //Property Duplication
     let duplicateProperty = properties.find(function(property){
-        return property.name === propertyName.value && property.type === propertyType.value && property.price === propertyPrice.value &&
-        property.description === propertyDescription.value && property.status === propertyStatus.value;
+        return property.name === propertyName.value && property.type === propertyType.value && property.address === propertyAddress.value && 
+        property.price === propertyPrice.value && property.description === propertyDescription.value && property.status === propertyStatus.value;
     });
 
     if (duplicateProperty) {
         propertyMessage.textContent = "A property with the same details already exists.";
+        propertyMessage.className = "error";
         return;
     }
 
-    //Add Successful
+    //New Property Added
     properties.push(newProperty);
     console.log(properties);
-    propertyMessage.textContent = "Property added successfully!"
+    propertyMessage.textContent = "Property added successfully!";
+    propertyMessage.className = "success";
+    propertyName.value = "";
+    propertyType.value = "";
+    propertyAddress.value = "";
+    propertyPrice.value = "";
+    propertyDescription.value = "";
+    propertyStatus.value = "Available";
+
+    propertyList.innerHTML += `
+    <div class="propertyCard">
+        <h4>${newProperty.name}</h4>
+        <p>Type: ${newProperty.type}</p>
+        <p>Address: ${newProperty.address}</p>
+        <p>Price: £${newProperty.price}</p>
+        <p>Status: ${newProperty.status}</p>
+        <p>${newProperty.description}</p>
+    </div>`;
 });
 
-//inquiries
+//INQUIRIES
 inquiryButton.addEventListener("click",function() {
     let property = inquiryProperty.value;
-    let message = inquiryMessage.value;
-    if (property === "" || message === "") {
-    inquiryResult.textContent = "Please fill in all fields";
+    let inquiryText = inquiryMessage.value;
+    if (property === "" || inquiryText === "") {
+    inquiryResult.textContent = "Please fill in all fields.";
+    inquiryResult.className = "error";
     } else {
-    inquiryResult.textContent = "Inquiry submitted successfully";
+        inquiryResult.textContent = "Inquiry submitted successfully!";
+        inquiryResult.className = "success";
+
+    //Clearing Inquiry  Form
+    inquiryProperty.value = "";
+    inquiryMessage.value = "";
+
     }
 
-
-
 });
+
+//PAYMENT OPTIONS (NFR-7)
+function processPayment() {
+    //For future payment implementation
+}

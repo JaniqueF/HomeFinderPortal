@@ -1,3 +1,4 @@
+//SERVER STORAGE(NFR-9)
 let users = [
     {
         email: "customer@gmail.com",
