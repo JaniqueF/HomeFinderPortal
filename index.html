@@ -13,7 +13,7 @@
       <form>
         <input type="email" id="email" placeholder="Email" required />
         <input type="password" id="password" placeholder="Password" required />
-        <button id="logoutButton">Logout</button>
+        <button id="loginButton">Login</button>
       </form>
       <div id="message"></div>
       <div class="registerLink">
@@ -56,14 +56,16 @@
     </div>
 
     <!--DISPLAY DASHBOARD IF SUCCESSFUL-->
-<div id="dashboard">
+    <div id="dashboard">
+      <div class="header">
+        <div class="logo">
+          <img src="images/homeFinderLogo.png" alt="logo" />
+        </div>
+        <h1 class="title">HomeFinder Portal</h1>
+        <button id="logOutButton" class="logoutBtn">Logout</button>
+      </div>
 
-  <div class="header">
-    <h1>HomeFinder Portal</h1>
-    <button id="logOutButton">Logout</button>
-  </div>
-
-  <h2>Welcome, User!</h2>
+      <h2>Welcome, User!</h2>
 
       <!--ADMIN ADD PROPERTY (FR-26)-->
       <div id="adminAccess">

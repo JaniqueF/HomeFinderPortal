@@ -78,7 +78,7 @@ button.addEventListener("click", function (event) {
         loginBox.style.display = "none";
         tokenBox.style.display = "block";
 
-        tokenMessage.textContent = "Token: " + currentToken;
+        alert("Verification Token: " + currentToken);
 
     } else {
         console.log("login fail");
@@ -91,9 +91,7 @@ verifyToken.addEventListener("click", function() {
     let enteredToken = tokenInput.value;
 
     if (enteredToken == currentToken) {
-        tokenMessage.textContent = "Verification Successful!";
-
-        tokenBox.style.display = "none";
+           tokenBox.style.display = "none";
         dashboard.style.display = "block";
         tokenInput.value = "";
     } else {
@@ -128,19 +126,23 @@ createAccount.addEventListener("click", function() {
 
     if (name === "" || email === "" || password === "" || confirm === "") {
         signUpMessage.textContent = "Please complete all fields.";
+        signUpMessage.className = "error";
     }
     else if (password.length < 8) {
         signUpMessage.textContent = "Password must have a minimum of 8 characters.";
+        signUpMessage.className = "error";
 
     }
 
     else if (password !== confirm) {
         signUpMessage.textContent = "Passwords do not match.";
+        signUpMessage.className = "error";
 
     }
 
     else {
         signUpMessage.textContent = "Account created successfully!";
+        signUpMessage.className = "success";
         users.push({
             fullName: name,
             email: email,

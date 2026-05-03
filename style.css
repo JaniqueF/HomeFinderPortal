@@ -1,8 +1,8 @@
-        body {
+body {
     font-family: Arial, sans-serif;
     background: #f4f6f9;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     min-height: 100vh;
 
     display: flex;
@@ -10,13 +10,13 @@
     align-items: center;
 }
 
-/* Main Containers */
+/* MAIN CONTAINERS */
 .loginBox,
 #dashboard,
 #tokenBox,
 #signUpBox {
     background: white;
-    padding: 30px;
+    padding: 35px;
     border-radius: 16px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.1);
     width: 90%;
@@ -24,33 +24,103 @@
     margin: 20px auto;
 }
 
-/* Dashboard Layout */
+/* TOKEN VERIFICATION */
+#tokenBox {
+    display: none;
+    text-align: center;
+}
+
+#tokenBox input {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#tokenBox button {
+    margin-top: 10px;
+}
+
+#tokenMessage {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* DASHBOARD */
 #dashboard {
+    display: none;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+/* HEADER */
+.header {
+    height: 80px;
+    padding: 0 30px;
+    background: #007BFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     position: relative;
+    border-radius: 16px 16px 0 0;
 }
 
-/* Logout Button Top Right */
-.logoutBtn {
+/* LOGO BUBBLE */
+.logo {
+    background: white;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+/* CENTER TITLE */
+.title {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 22px;
+    color: white;
 }
 
-/* Headings */
-h2 {
+/* LOGOUT BUTTON */
+#logOutButton {
+    background: white;
+    color: #007BFF;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: none;
+}
+
+#logOutButton:hover {
+    background: #f0f0f0;
+}
+
+/* HEADINGS */
+h1, h2, h3 {
     text-align: center;
     margin-bottom: 25px;
     color: #333;
 }
 
-/* Form Styling */
+/* FORM */
 form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-/* Inputs */
+/* INPUTS */
 input,
 select,
 textarea {
@@ -70,7 +140,7 @@ textarea:focus {
     border-color: #007BFF;
 }
 
-/* Buttons */
+/* BUTTONS */
 button {
     padding: 12px 20px;
     background: #007BFF;
@@ -88,7 +158,7 @@ button:hover {
     transform: translateY(-2px);
 }
 
-/* Utility Messages */
+/* MESSAGES */
 .error {
     color: red;
     text-align: center;
@@ -99,14 +169,14 @@ button:hover {
     text-align: center;
 }
 
-/* Hide Sections */
+/* HIDE SECTIONS */
 #signUpBox,
 #tokenBox,
 #dashboard {
     display: none;
 }
 
-/* Property List */
+/* PROPERTY LIST */
 .propertyList {
     display: flex;
     justify-content: center;
@@ -115,7 +185,7 @@ button:hover {
     margin-top: 30px;
 }
 
-/* Property Cards */
+/* PROPERTY CARDS */
 .propertyCard {
     background: white;
     padding: 20px;
@@ -130,8 +200,8 @@ button:hover {
     box-shadow: 0 10px 22px rgba(0,0,0,0.12);
 }
 
-/* Card Text */
-.propertyCard h3 {
+/* CARD TEXT */
+.propertyCard h4 {
     margin-top: 0;
     color: #222;
 }
@@ -141,7 +211,7 @@ button:hover {
     line-height: 1.5;
 }
 
-/* Section Spacing */
+/* EXTRA SPACING */
 .section {
     margin-bottom: 40px;
 }
