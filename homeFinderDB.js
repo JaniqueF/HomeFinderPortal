@@ -11,3 +11,7 @@ let users = [
         role: "admin"
     }
 ];
+
+if (localStorage.getItem("homeFinderUsers")) {
+    users = JSON.parse(localStorage.getItem("homeFinderUsers"));
+}
