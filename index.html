@@ -58,14 +58,19 @@
     <!--Dashboard if login successful-->
     <div id="dashboard">
       <h1>HomeFinder Portal</h1>
-      <h2>Welcome, Customer!</h2>
+      <h2>Welcome, User!</h2>
       <button id="logOutButton">Logout</button>
 
       <!--Admin-->
       <div id="adminAccess">
         <h3>Add Property</h3>
         <input type="text" id="propertyName" placeholder="Property Name" />
-        <input type="text" id="propertyType" placeholder="Property Type" />
+        <select id="propertyType">
+          <option value="">Select Property Type</option>
+          <option value="Residental">Residental</option>
+          <option value="Commercial">Commercial</option>
+          <option value="Rental">Rental</option>
+        </select>
         <input type="number" id="propertyPrice" placeholder="Price" />
         <textarea id="propertyDescription" placeholder="Description"></textarea>
         <select id="propertyStatus">
@@ -78,16 +83,16 @@
         <p id="propertyMessage"></p>
       </div>
 
-      <!-- search property -->
+      <!-- Search/Browse Properties (FR-10) -->
       <div class="searchBox" id="searchBox">
         <input type="text" placeholder="Search property listings..." />
         <button id="searchButton">Search</button>
         <h3>Browse Properties</h3>
 
         <!-- Add Properties (FR-26) -->
-        <div class="propertyLists" id="propertyLists"></div>
+        <div class="propertyList" id="propertyList"></div>
 
-        <!-- submit inquiry -->
+        <!-- Submit Inquiry (FR-20) -->
         <div class="inquiryMessage">
           <h4>Submit Inquiry</h4>
           <input type="text" id="inquiryProperty" placeholder="Property Name" />

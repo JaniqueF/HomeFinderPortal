@@ -1,5 +1,5 @@
 if (localStorage.getItem("homeFinderUsers")) {
-  user = JSON.parse(localStorage.getItem("homeFinderUsers"));
+  users = JSON.parse(localStorage.getItem("homeFinderUsers"));
 }
 
 //LOGIN
@@ -8,7 +8,6 @@ let message = document.getElementById("message");
 let button = document.getElementById("loginButton");
 let email = document.getElementById("email");
 let password = document.getElementById("password");
-let dashboard = document.getElementById("dashboard");
 
 //SIGNUP
 let showSignUp = document.getElementById("showSignUp");
@@ -40,7 +39,17 @@ let dashboard = document.getElementById("dashboard")
 let logOutButton = document.getElementById("logOutButton")
 
 //ADMIN ACCESS
-let adminAccess = document.getElementById("adminAccess")
+let adminAccess = document.getElementById("adminAccess");
+let propertyName = document.getElementById("propertyName");
+let propertyType = document.getElementById("propertyType");
+let propertyPrice = document.getElementById("propertyPrice");
+let propertyDescription = document.getElementById("propertyDescription");
+let addPropertyButton = document.getElementById("addPropertyButton");
+let propertyMessage = document.getElementById("propertyMessage");
+let propertyList = document.getElementById("propertyList");
+let propertyStatus = document.getElementById("propertyStatus");
+let properties = [];
+
 
 //Login
 button.addEventListener("click", function (event) {
@@ -51,7 +60,7 @@ button.addEventListener("click", function (event) {
     console.log(userEmail);
     console.log(userPassword);
 
-    let matchedUser = user.find(function(account) {
+    let matchedUser = users.find(function(account) {
         return account.email === userEmail && account.password === userPassword;
     });
 
@@ -82,6 +91,12 @@ verifyToken.addEventListener("click", function() {
     } else {
         tokenMessage.textContent = "Invalid Token."
     }
+    //Dashboard display based on user role
+    if (currentUser.role === "admin") {
+    adminAccess.style.display = "block";
+    } else {
+        adminAccess.style.display = "none";
+    }
 
 });
 
@@ -95,6 +110,7 @@ showSignUp.addEventListener("click", function (event) {
 
 });
 
+//Signup
 createAccount.addEventListener("click", function() {
     console.log("signup link clicked");
     let name = fullName.value;
@@ -117,14 +133,14 @@ createAccount.addEventListener("click", function() {
 
     else {
         signUpMessage.textContent = "Account created successfully!";
-        user.push({
+        users.push({
             fullName: name,
             email: email,
             password: password,
             role: "customer"
         });
 
-        localStorage.setItem("homeFinderUsers", JSON.stringify(user));
+        localStorage.setItem("homeFinderUsers", JSON.stringify(users));
         signUpBox.style.display = "none";
         loginBox.style.display = "block";
     }
@@ -140,6 +156,47 @@ backToLogin.addEventListener("click", function () {
 logOutButton.addEventListener("click", function () {
     dashboard.style.display ="none";
     loginBox.style.display = "block";
+});
+
+//Admin - Adding Properties
+addPropertyButton.addEventListener("click", function() {
+    console.log("add button clicked");
+    console.log(propertyName.value);
+    console.log(propertyType.value);
+    console.log(propertyPrice.value);
+    console.log(propertyDescription.value);
+    console.log(propertyStatus.value);
+
+    let newProperty = {
+        name: propertyName.value,
+        type: propertyType.value,
+        price: propertyPrice.value,
+        description: propertyDescription.value,
+        status: propertyStatus.value
+    };
+
+    //Incomplete Details
+    if (propertyName.value === "" || propertyType.value === "" || propertyPrice.value === "" ||
+         propertyDescription.value === "" || propertyStatus.value === "") {
+        propertyMessage.textContent = "Please complete all required property details.";
+        return;
+    }
+
+    //Property Duplication
+    let duplicateProperty = properties.find(function(property){
+        return property.name === propertyName.value && property.type === propertyType.value && property.price === propertyPrice.value &&
+        property.description === propertyDescription.value && property.status === propertyStatus.value;
+    });
+
+    if (duplicateProperty) {
+        propertyMessage.textContent = "A property with the same details already exists.";
+        return;
+    }
+
+    //Add Successful
+    properties.push(newProperty);
+    console.log(properties);
+    propertyMessage.textContent = "Property added successfully!"
 });
 
 //inquiries

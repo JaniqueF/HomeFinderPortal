@@ -1,7 +1,7 @@
 let users = [
     {
         email: "customer@gmail.com",
-        password: "Password1!",
+        password: "password",
         role: "customer"
     },
 
