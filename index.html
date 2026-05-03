@@ -43,14 +43,40 @@
       />
       <div id="signUpMessage"></div>
       <button id="createAccount">Create Account</button>
-
       <button id="backToLogin">Back to Login</button>
+    </div>
+
+    <!--Sign up token (FR-8)-->
+    <div id="tokenBox">
+      <h3>Email Verification</h3>
+      <p>Enter token sent to your email:</p>
+      <input id="tokenInput" type="text" placeholder="Token" required />
+      <button id="verifyToken">Verify</button>
+      <div id="tokenMessage"></div>
     </div>
 
     <!--Dashboard if login successful-->
     <div id="dashboard">
       <h1>HomeFinder Portal</h1>
       <h2>Welcome, Customer!</h2>
+      <button id="logOutButton">Logout</button>
+
+      <!--Admin-->
+      <div id="adminAccess">
+        <h3>Add Property</h3>
+        <input type="text" id="propertyName" placeholder="Property Name" />
+        <input type="text" id="propertyType" placeholder="Property Type" />
+        <input type="number" id="propertyPrice" placeholder="Price" />
+        <textarea id="propertyDescription" placeholder="Description"></textarea>
+        <select id="propertyStatus">
+          <option value="Available">Available</option>
+          <option value="Sold">Sold</option>
+          <option value="Rented">Rented</option>
+        </select>
+
+        <button id="addPropertyButton">Save Property</button>
+        <p id="propertyMessage"></p>
+      </div>
 
       <!-- search property -->
       <div class="searchBox" id="searchBox">
@@ -58,35 +84,15 @@
         <button id="searchButton">Search</button>
         <h3>Browse Properties</h3>
 
-        <div class="propertyLists">
-          <div class="propertyCard">
-            <h4>Family Home</h4>
-            <p>Residential</p>
-            <p>£120,000/month</p>
-            <button>View</button>
-          </div>
-
-          <div class="propertyCard">
-            <h4>Office Space</h4>
-            <p>Commercial</p>
-            <p>£3,000/month</p>
-            <button>View</button>
-          </div>
-
-          <div class="propertyCard">
-            <h4>Modern Flat</h4>
-            <p>Rental</p>
-            <p>£1,200/month</p>
-            <button>View</button>
-          </div>
-        </div>
+        <!-- Add Properties (FR-26) -->
+        <div class="propertyLists" id="propertyLists"></div>
 
         <!-- submit inquiry -->
         <div class="inquiryMessage">
           <h4>Submit Inquiry</h4>
           <input type="text" id="inquiryProperty" placeholder="Property Name" />
           <textarea
-            id="inquriyMessage"
+            id="inquiryMessage"
             placeholder="Enter your inquiry..."
           ></textarea>
           <button id="inquiryButton">Submit Inquiry</button>
@@ -95,7 +101,7 @@
       </div>
     </div>
 
-    <script src="userDB.js"></script>
+    <script src="homeFinderDB.js"></script>
     <script src="portal.js"></script>
   </body>
 </html>

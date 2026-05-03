@@ -1,4 +1,8 @@
-//Login
+if (localStorage.getItem("homeFinderUsers")) {
+  user = JSON.parse(localStorage.getItem("homeFinderUsers"));
+}
+
+//LOGIN
 let loginBox = document.getElementById("loginBox");
 let message = document.getElementById("message");
 let button = document.getElementById("loginButton");
@@ -6,6 +10,39 @@ let email = document.getElementById("email");
 let password = document.getElementById("password");
 let dashboard = document.getElementById("dashboard");
 
+//SIGNUP
+let showSignUp = document.getElementById("showSignUp");
+let signUpBox = document.getElementById("signUpBox");
+let backToLogin = document.getElementById("backToLogin");
+let createAccount = document.getElementById("createAccount");
+let fullName = document.getElementById("fullName");
+let signUpEmail = document.getElementById("signUpEmail");
+let signUpPassword = document.getElementById("signUpPassword");
+let confirmPassword = document.getElementById("confirmPassword");
+let signUpMessage = document.getElementById("signUpMessage");
+
+//EMAIL TOKEN
+let tokenBox = document.getElementById("tokenBox");
+let tokenInput = document.getElementById("tokenInput");
+let verifyToken = document.getElementById("verifyToken");
+let tokenMessage = document.getElementById("tokenMessage");
+let currentToken;
+let currentUser;
+
+//INQUIRIES
+let inquiryButton = document.getElementById("inquiryButton");
+let inquiryProperty = document.getElementById("inquiryProperty");
+let inquiryMessage = document.getElementById("inquiryMessage");
+let inquiryResult = document.getElementById("inquiryResult");
+
+//DASHBOARD
+let dashboard = document.getElementById("dashboard")
+let logOutButton = document.getElementById("logOutButton")
+
+//ADMIN ACCESS
+let adminAccess = document.getElementById("adminAccess")
+
+//Login
 button.addEventListener("click", function (event) {
     event.preventDefault();
     console.log("clicked");
@@ -19,9 +56,13 @@ button.addEventListener("click", function (event) {
     });
 
     if (matchedUser) {
+        currentUser = matchedUser;
         console.log("login success");
+        currentToken = Math.floor(100000 + Math.random() * 900000);
         loginBox.style.display = "none";
-        dashboard.style.display = "block";
+        tokenBox.style.display = "block";
+
+        tokenMessage.textContent = "Token:" + currentToken;
 
     } else {
         console.log("login fail");
@@ -30,16 +71,21 @@ button.addEventListener("click", function (event) {
 
 });
 
+verifyToken.addEventListener("click", function() {
+    let enteredToken = tokenInput.value;
+
+    if (enteredToken == currentToken) {
+        tokenMessage.textContent = "Verification Successful!";
+
+        tokenBox.style.display = "none";
+        dashboard.style.display = "block";
+    } else {
+        tokenMessage.textContent = "Invalid Token."
+    }
+
+});
+
 //SignUp
-let showSignUp = document.getElementById("showSignUp");
-let signUpBox = document.getElementById("signUpBox");
-let backToLogin = document.getElementById("backToLogin");
-let createAccount = document.getElementById("createAccount");
-let fullName = document.getElementById("fullName");
-let signUpEmail = document.getElementById("signUpEmail");
-let signUpPassword = document.getElementById("signUpPassword");
-let confirmPassword = document.getElementById("confirmPassword");
-let signUpMessage = document.getElementById("signUpMessage");
 
 showSignUp.addEventListener("click", function (event) {
     event.preventDefault();
@@ -78,6 +124,7 @@ createAccount.addEventListener("click", function() {
             role: "customer"
         });
 
+        localStorage.setItem("homeFinderUsers", JSON.stringify(user));
         signUpBox.style.display = "none";
         loginBox.style.display = "block";
     }
@@ -89,12 +136,13 @@ backToLogin.addEventListener("click", function () {
     loginBox.style.display = "block";
 });
 
+//Dashboard
+logOutButton.addEventListener("click", function () {
+    dashboard.style.display ="none";
+    loginBox.style.display = "block";
+});
 
-let inquiryButton = document.getElementById("inquiryButton");
-let inquiryProperty = document.getElementById("inquiryProperty");
-let inquiryMessage = document.getElementById("inquiryMessage");
-let inquiryResult = document.getElementById("inquiryResult");
-
+//inquiries
 inquiryButton.addEventListener("click",function() {
     let property = inquiryProperty.value;
     let message = inquiryMessage.value;

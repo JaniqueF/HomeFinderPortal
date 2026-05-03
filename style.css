@@ -55,9 +55,14 @@
   color: red;
 }
 
+#tokenBox {
+    display: none;
+}
+
 #dashboard {
     display: none;
 }
+
 
 .propertyCard {
     background: white;
