@@ -1,25 +1,13 @@
 //Personal data handling is minimised and stored locally (NFR-1, NFR-2, NFR-3)
-//System maintenance scheduling would be handled server-side in production (NFR-10)
+//System maintenance scheduling would be handled server-side (NFR-10)
 if (localStorage.getItem("homeFinderUsers")) {
   users = JSON.parse(localStorage.getItem("homeFinderUsers"));
 }
 
-//EMAIL SYSTEM (SIMULATED - NFR-8)
-function sendVerificationEmail(email, token) {
-    console.log("Simulating sending email to " + email + " with token: " + token);
-}
-
-//PAYMENT SYSTEM (SIMULATED - NFR-7)
-function processPayment(amount) {
-    console.log("Processing payment of £" + amount);
-    return "Payment successful (simulated)";
-}
-
-
 //LOGIN
 let loginBox = document.getElementById("loginBox");
 let message = document.getElementById("message");
-let button = document.getElementById("loginButton");
+let loginButton = document.getElementById("loginButton");
 let email = document.getElementById("email");
 let password = document.getElementById("password");
 
@@ -54,6 +42,9 @@ let propertyName = document.getElementById("propertyName");
 let propertyType = document.getElementById("propertyType");
 let propertyAddress = document.getElementById("propertyAddress");
 let propertyPrice = document.getElementById("propertyPrice");
+let propertyBedrooms = document.getElementById("propertyBedrooms");
+let propertyBathrooms = document.getElementById("propertyBathrooms");
+let propertyAmenities = document.getElementById("propertyAmenities");
 let propertyDescription = document.getElementById("propertyDescription");
 let addPropertyButton = document.getElementById("addPropertyButton");
 let propertyMessage = document.getElementById("propertyMessage");
@@ -65,11 +56,12 @@ let inquiryButton = document.getElementById("inquiryButton");
 let inquiryProperty = document.getElementById("inquiryProperty");
 let inquirySection = document.getElementById("inquirySection");
 let inquiryMessage = document.getElementById("inquiryMessage");
+let inquiryDate = document.getElementById("inquiryDate");
 let inquiryResult = document.getElementById("inquiryResult");
 
 
 //HANDLE USER LOGIN (FR-6&7)
-button.addEventListener("click", function (event) {
+loginButton.addEventListener("click", function (event) {
     event.preventDefault();
 
     let userEmail = email.value;
@@ -79,16 +71,16 @@ button.addEventListener("click", function (event) {
         return account.email === userEmail && account.password === userPassword;
     });
 
-    //TOKEN VERIFICATION (FR-8)
+    //TOKEN VERIFICATION (FR-8, NFR-4)
     if (matchedUser) {
         currentUser = matchedUser;
 
         currentToken = Math.floor(100000 + Math.random() * 900000);
 
-        //Simulate sending token via email (NFR-8)
+        //Sending token (NFR-8)
         sendVerificationEmail(userEmail, currentToken);
 
-        alert("Verification code sent (simulated): " + currentToken);
+        alert("Verification Token: " + currentToken);
 
         loginBox.style.display = "none";
         tokenBox.style.display = "block";
@@ -97,6 +89,11 @@ button.addEventListener("click", function (event) {
         message.textContent = "Invalid credentials";
     }
 });
+
+//EMAIL SYSTEM (NFR-8)
+function sendVerificationEmail(email, token) {
+    console.log("Sending email to " + email + " with token: " + token);
+}
 
 verifyToken.addEventListener("click", function() {
     let enteredToken = tokenInput.value;
@@ -109,7 +106,7 @@ verifyToken.addEventListener("click", function() {
         tokenMessage.textContent = "Invalid Token.";
     }
 
-    //ROLE ACCESS CONTROL - ADMIN/CUSTOMER (NFR-6)
+    //ROLE ACCESS CONTROL FOR ADMIN/CUSTOMER (NFR-6)
     if (currentUser.role === "admin") {
         adminAccess.style.display = "block";
         inquirySection.style.display = "none";
@@ -184,6 +181,9 @@ searchButton.addEventListener("click", function() {
                 <p>Type: ${property.type}</p>
                 <p>Address: ${property.address}</p>
                 <p>Price: £${property.price}</p>
+                <p>Bedrooms: ${property.bedrooms}</p>
+                <p>Bathrooms: ${property.bathrooms}</p>
+                <p>Amenities: ${property.amenities}</p>
                 <p>Status: ${property.status}</p>
                 <p>${property.description}</p>
             </div>`;
@@ -208,12 +208,15 @@ addPropertyButton.addEventListener("click", function() {
         type: propertyType.value,
         address: propertyAddress.value,
         price: propertyPrice.value,
+        bedrooms: propertyBedrooms.value,
+        bathrooms: propertyBathrooms.value,
+        amenities: propertyAmenities.value,
         description: propertyDescription.value,
         status: propertyStatus.value
     };
 
-    if (propertyName.value === "" || propertyType.value === "" || propertyAddress.value === "" || 
-        propertyPrice.value === "" || propertyDescription.value === "" || propertyStatus.value === "") {
+    if (propertyName.value === "" || propertyType.value === "" || propertyAddress.value === "" || propertyPrice.value === "" || propertyBedrooms.value === ""|| 
+        propertyBathrooms.value === "" || propertyAmenities.value === "" || propertyDescription.value === "" || propertyStatus.value === "") {
         propertyMessage.textContent = "Please complete all required property details.";
         propertyMessage.className = "error";
         return;
@@ -224,6 +227,9 @@ addPropertyButton.addEventListener("click", function() {
                property.type === propertyType.value &&
                property.address === propertyAddress.value &&
                property.price === propertyPrice.value &&
+               property.bedrooms === propertyBedrooms.value &&
+               property.bathrooms === propertyBathrooms.value &&
+               property.amenities === propertyAmenities.value &&
                property.description === propertyDescription.value &&
                property.status === propertyStatus.value;
     });
@@ -243,30 +249,49 @@ addPropertyButton.addEventListener("click", function() {
     propertyType.value = "";
     propertyAddress.value = "";
     propertyPrice.value = "";
+    propertyBedrooms.value = "";
+    propertyBathrooms.value = "";
+    propertyAmenities.value = "";
     propertyDescription.value = "";
     propertyStatus.value = "Available";
 });
+
+//GROUP PROPERTY LISTINGS
+function groupPropertyListings() {
+    //Future implementation for grouping properties by type
+}
 
 //SUBMIT INQUIRY (FR-20)
 inquiryButton.addEventListener("click",function() {
     let property = inquiryProperty.value;
     let inquiryText = inquiryMessage.value;
+    let date = inquiryDate.value;
 
-    if (property === "" || inquiryText === "") {
+    if (property === "" || inquiryText === "" || inquiryDate === "") {
         inquiryResult.textContent = "Please fill in all fields.";
         inquiryResult.className = "error";
     } else {
         inquiryResult.textContent = "Inquiry submitted successfully!";
         inquiryResult.className = "success";
 
-        //Store inquiry (simulated)
+        //Store inquiry
         inquiries.push({
             property: property,
             message: inquiryText,
+            date: inquiryDate,
+            iStatus: "Pending",
+
             user: currentUser.email
         });
 
         inquiryProperty.value = "";
+        inquiryDate.value = "";
         inquiryMessage.value = "";
     }
 });
+
+//PAYMENT SYSTEM (NFR-7)
+function processPayment(amount) {
+    console.log("Processing payment of £" + amount);
+    return "Payment successful (simulated)";
+}
