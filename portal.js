@@ -6,10 +6,18 @@ if (localStorage.getItem("homeFinderUsers")) {
 
 //LOGIN
 let loginBox = document.getElementById("loginBox");
-let message = document.getElementById("message");
+let loginMessage = document.getElementById("loginMessage");
 let loginButton = document.getElementById("loginButton");
 let email = document.getElementById("email");
 let password = document.getElementById("password");
+
+//EMAIL TOKEN
+let tokenBox = document.getElementById("tokenBox");
+let tokenInput = document.getElementById("tokenInput");
+let verifyToken = document.getElementById("verifyToken");
+let tokenMessage = document.getElementById("tokenMessage");
+let currentToken;
+let currentUser;
 
 //SIGNUP
 let showSignUp = document.getElementById("showSignUp");
@@ -21,14 +29,6 @@ let signUpEmail = document.getElementById("signUpEmail");
 let signUpPassword = document.getElementById("signUpPassword");
 let confirmPassword = document.getElementById("confirmPassword");
 let signUpMessage = document.getElementById("signUpMessage");
-
-//EMAIL TOKEN
-let tokenBox = document.getElementById("tokenBox");
-let tokenInput = document.getElementById("tokenInput");
-let verifyToken = document.getElementById("verifyToken");
-let tokenMessage = document.getElementById("tokenMessage");
-let currentToken;
-let currentUser;
 
 //DASHBOARD
 let dashboard = document.getElementById("dashboard")
@@ -85,9 +85,15 @@ loginButton.addEventListener("click", function (event) {
         loginBox.style.display = "none";
         tokenBox.style.display = "block";
 
+    } else if (userEmail === "" || userPassword === "") {
+        loginMessage.textContent = "Please complete all fields.";
+        loginMessage.className = "error"; 
+        
     } else {
-        message.textContent = "Invalid credentials";
+        loginMessage.textContent = "Incorrect email or password.";
+        loginMessage.className = "error";
     }
+
 });
 
 //EMAIL SYSTEM (NFR-8)
@@ -162,6 +168,7 @@ createAccount.addEventListener("click", function() {
 backToLogin.addEventListener("click", function () {
     signUpBox.style.display ="none";
     loginBox.style.display = "block";
+
 });
 
 //SEARCH/BROWSE PROPERTIES (FR-10)
@@ -194,6 +201,7 @@ searchButton.addEventListener("click", function() {
 logOutButton.addEventListener("click", function () {
     dashboard.style.display ="none";
     loginBox.style.display = "block";
+    loginMessage.textContent = "";
     searchInput.value = "";
     inquiryProperty.value = "";
     inquiryMessage.value = "";
@@ -293,5 +301,5 @@ inquiryButton.addEventListener("click",function() {
 //PAYMENT SYSTEM (NFR-7)
 function processPayment(amount) {
     console.log("Processing payment of £" + amount);
-    return "Payment successful (simulated)";
+    return "Payment successful!";
 }

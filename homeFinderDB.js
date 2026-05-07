@@ -1,5 +1,4 @@
 //SERVER STORAGE(NFR-9)
-
 let users = [
     {
         email: "customer@gmail.com",
@@ -13,13 +12,13 @@ let users = [
     }
 ];
 
-//PROPERTY STORAGE (SIMULATED DATABASE)
+//PROPERTY STORAGE
 var properties = [];
 
-//INQUIRY STORAGE (SIMULATED DATABASE)
+//INQUIRY STORAGE
 var inquiries = [];
 
-//Load users from localStorage
+//Load users from local storage
 if (localStorage.getItem("homeFinderUsers")) {
     users = JSON.parse(localStorage.getItem("homeFinderUsers"));
 }
