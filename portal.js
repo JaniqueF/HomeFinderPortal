@@ -264,7 +264,7 @@ addPropertyButton.addEventListener("click", function() {
     propertyStatus.value = "Available";
 });
 
-//GROUP PROPERTY LISTINGS
+//GROUP PROPERTY LISTINGS (FR-10)
 function groupPropertyListings() {
     //Future implementation for grouping properties by type
 }
